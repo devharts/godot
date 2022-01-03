@@ -646,8 +646,16 @@ void OSIPhone::native_video_stop() {
 }
 
 void OSIPhone::vibrate_handheld(int p_duration_ms) {
-	// iOS does not support duration for vibration
-	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+	// iOS does not support duration for vibration.
+	// If specified duration is below a certain threshold, replace with haptic feedback:
+	if (p_duration_ms < 50) {
+		printf("\n\n [OSIPhone::vibrate_handheld] Using haptic feedback... \n\n");
+		[AppDelegate.viewController.godotView.hapticFeedbackGenerator impactOccurred];
+	} else {
+		// Otherwise, just vibrate it using whatever iOS default:
+		printf("\n\n [OSIPhone::vibrate_handheld] Using default vibration... \n\n");
+		AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);	
+	}
 }
 
 bool OSIPhone::_check_internal_feature_support(const String &p_feature) {

@@ -65,4 +65,6 @@ class String;
 
 @property(nonatomic, assign) BOOL useCADisplayLink;
 
+@property(strong, nonatomic) UIImpactFeedbackGenerator *hapticFeedbackGenerator;
+
 @end
