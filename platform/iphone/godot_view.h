@@ -70,4 +70,6 @@ class String;
 - (void)godotTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)godotTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 
+@property(strong, nonatomic) UIImpactFeedbackGenerator *hapticFeedbackGenerator;
+
 @end

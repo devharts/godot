@@ -162,6 +162,10 @@ static const int max_touches = 8;
 	GodotViewGestureRecognizer *gestureRecognizer = [[GodotViewGestureRecognizer alloc] init];
 	self.delayGestureRecognizer = gestureRecognizer;
 	[self addGestureRecognizer:self.delayGestureRecognizer];
+
+	// Initialize haptic feedback generator:
+	UIImpactFeedbackGenerator *hapGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
+	self.hapticFeedbackGenerator = hapGen;
 }
 
 - (void)startRendering {
