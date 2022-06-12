@@ -401,6 +401,7 @@ void EditorExportPlatformIOS::get_export_options(List<ExportOption> *r_options) 
 
 	r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "capabilities/access_wifi"), false));
 	r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "capabilities/push_notifications"), false));
+	r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "capabilities/healthkit"), false));
 
 	r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "user_data/accessible_from_files_app"), false));
 	r_options->push_back(ExportOption(PropertyInfo(Variant::BOOL, "user_data/accessible_from_itunes_sharing"), false));
@@ -540,6 +541,9 @@ void EditorExportPlatformIOS::_fix_config_file(const Ref<EditorExportPreset> &p_
 		} else if (lines[i].find("$entitlements_push_notifications") != -1) {
 			bool is_on = p_preset->get("capabilities/push_notifications");
 			strnew += lines[i].replace("$entitlements_push_notifications", is_on ? "<key>aps-environment</key><string>development</string>" : "") + "\n";
+		} else if (lines[i].find("$entitlements_healthkit") != -1) {
+			bool healthkit_is_on = p_preset->get("capabilities/healthkit");
+			strnew += lines[i].replace("$entitlements_healthkit", healthkit_is_on ? "<key>com.apple.developer.healthkit</key><true/><key>com.apple.developer.healthkit.access</key><array/>" : "") + "\n";
 		} else if (lines[i].find("$required_device_capabilities") != -1) {
 			String capabilities;
 
